@@ -4,8 +4,7 @@ function getFormData($method){
     if($method === 'GET') return $_GET;
     if($method === 'POST') return $_POST;
 
-
-    $data = array();
+    $data = [];
     $exploded = explode('&', file_get_contents('php://input'));
 
     foreach($exploded as $pair) {
@@ -21,14 +20,13 @@ function getFormData($method){
 $method = $_SERVER['REQUEST_METHOD'];
 $formData = getFormData($method);
 
-$url = (isset($_GET['q'])) ? $_GET['q'] : '';
+$url = isset($_GET['q']) ? $_GET['q'] : '';
 $url = rtrim($url, '/');
-$urls = explode('/', $url);
 
+$urls = explode('/', $url);
 $router = $urls[1];
 $urlData = array_slice($urls, 2);
 
 include_once 'api/indicators.php';
-route($method, $urlData, $formData);
 
-?>
+route($method, $urlData, $formData);

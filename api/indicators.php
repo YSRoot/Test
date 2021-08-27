@@ -25,12 +25,17 @@ function save_item($number){
 
 function GUID()
 {
-    if (function_exists('com_create_guid') === true)
-    {
-        return trim(com_create_guid(), '{}');
-    }
-
-    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    return sprintf(
+        '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(16384, 20479),
+        mt_rand(32768, 49151),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535)
+    );
 }
 
 function generate_string($input, $length) {
@@ -81,8 +86,7 @@ function route($method, $urlData, $formData) {
             }
             if($formData['type'] === "guid"){
                 $random_val = GUID();
-                $random_val = substr(0, $length); //? не режет guid
-            } 
+            }
         }
         
 
@@ -99,9 +103,9 @@ function route($method, $urlData, $formData) {
 
     // Возвращаем ошибку
     header('HTTP/1.0 400 Bad Request');
+
     echo json_encode(array(
         'error' => 'Bad Request'
     ));
 
 }
-?>
